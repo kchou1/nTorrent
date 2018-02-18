@@ -20,7 +20,7 @@
 */
 
 #include "torrent-file.hpp"
-#include "util/io-util.hpp"
+#include "util/no-io-util.hpp"
 #include "util/shared-constants.hpp"
 
 #include <ndn-cxx/security/key-chain.hpp>

@@ -23,7 +23,7 @@
 #include "file-manifest.hpp"
 
 #include "torrent-file.hpp"
-#include "util/io-util.hpp"
+#include "util/no-io-util.hpp"
 #include "util/logging.hpp"
 
 #include <boost/asio/io_service.hpp>

@@ -20,7 +20,7 @@
 */
 #include "file-manifest.hpp"
 
-#include "util/io-util.hpp"
+#include "util/no-io-util.hpp"
 #include "util/shared-constants.hpp"
 
 #include <limits>
