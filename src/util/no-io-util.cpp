@@ -53,7 +53,8 @@ IoUtil::packetize_file(const fs::path& filePath,
 {
   BOOST_ASSERT(0 < dataPacketSize);
   size_t APPROX_BUFFER_SIZE = std::numeric_limits<int>::max(); // 2 * 1024 * 1024 *1024
-  auto file_size = fs::file_size(filePath);
+  auto file_size = 100 * 1024;
+  //auto file_size = fs::file_size(filePath);
   auto start_offset = subManifestNum * subManifestSize * dataPacketSize;
   // determine the number of bytes in this submanifest
   auto subManifestLength = subManifestSize * dataPacketSize;
@@ -63,10 +64,7 @@ IoUtil::packetize_file(const fs::path& filePath,
                     : subManifestLength;
   vector<ndn::Data> packets;
   packets.reserve(subManifestLength/dataPacketSize + 1);
-  fs::ifstream fs(filePath, fs::ifstream::binary);
-  if (!fs) {
-    BOOST_THROW_EXCEPTION(Data::Error("IO Error when opening" + filePath.string()));
-  }
+  
   // ensure that buffer is large enough to contain whole packets
   // buffer size is either the entire file or the smallest number of data packets >= 2 GB
   auto buffer_size =
@@ -78,14 +76,10 @@ IoUtil::packetize_file(const fs::path& filePath,
   vector<char> file_bytes;
   file_bytes.reserve(buffer_size);
   size_t bytes_read = 0;
-  fs.seekg(start_offset);
-  while(fs && bytes_read < subManifestLength && !fs.eof()) {
-    // read the file into the buffer
-    fs.read(&file_bytes.front(), buffer_size);
-    auto read_size = fs.gcount();
-    if (fs.bad() || read_size < 0) {
-      BOOST_THROW_EXCEPTION(Data::Error("IO Error when reading" + filePath.string()));
-    }
+  while(bytes_read < subManifestLength) {
+    for(uint32_t i=0; i < buffer_size; i++)
+        file_bytes.at(i) = 'A';
+    auto read_size = buffer_size;
     bytes_read += read_size;
     char *curr_start = &file_bytes.front();
     for (size_t i = 0u; i < buffer_size; i += dataPacketSize) {
@@ -108,7 +102,7 @@ IoUtil::packetize_file(const fs::path& filePath,
       APPROX_BUFFER_SIZE                                  :
       APPROX_BUFFER_SIZE + dataPacketSize - (APPROX_BUFFER_SIZE % dataPacketSize);
   }
-  fs.close();
+  //fs.close();
   packets.shrink_to_fit();
   ndn::security::KeyChain key_chain;
   // sign all the packets
@@ -120,6 +114,7 @@ IoUtil::packetize_file(const fs::path& filePath,
 
 bool IoUtil::writeTorrentSegment(const TorrentFile& segment, const std::string& path)
 {
+  /*
   // validate that this torrent segment belongs to our torrent
   auto segmentNum = segment.getSegmentNumber();
   // write to disk at path
@@ -136,12 +131,13 @@ bool IoUtil::writeTorrentSegment(const TorrentFile& segment, const std::string& 
   }
   io::save(segment, filename);
   // add to collection
+  */
   return true;
 }
 
 bool IoUtil::writeFileManifest(const FileManifest& manifest, const std::string& path)
 {
-  auto subManifestNum = manifest.submanifest_number();
+  /*auto subManifestNum = manifest.submanifest_number();
   fs::path filename = path + manifest.file_name() + "/" + to_string(subManifestNum);
 
   // write to disk at path
@@ -155,7 +151,7 @@ bool IoUtil::writeFileManifest(const FileManifest& manifest, const std::string& 
       return false;
     }
   }
-  io::save(manifest, filename.string());
+  io::save(manifest, filename.string());*/
   return true;
 }
 bool
@@ -164,7 +160,8 @@ IoUtil::writeData(const Data&         packet,
                   size_t              subManifestSize,
                   const std::string&  filePath)
 {
-  fs::ofstream os (filePath, fs::ofstream::binary | fs::ofstream::out | fs::ofstream::app);
+  return true;
+  /*fs::ofstream os (filePath, fs::ofstream::binary | fs::ofstream::out | fs::ofstream::app);
   auto packetName = packet.getName();
   auto packetNum = packetName.get(packetName.size() - 1).toSequenceNumber();
   auto dataPacketSize = manifest.data_packet_size();
@@ -180,7 +177,7 @@ IoUtil::writeData(const Data&         packet,
   catch (io::Error &e) {
     LOG_ERROR << e.what() << std::endl;
     return false;
-  }
+  }*/
 }
 
 std::shared_ptr<Data>
@@ -189,24 +186,16 @@ IoUtil::readDataPacket(const Name&         packetFullName,
                        size_t              subManifestSize,
                        const std::string&  filePath)
 {
-  fs::fstream is (filePath, fs::fstream::in | fs::fstream::binary);
-  auto dataPacketSize = manifest.data_packet_size();
-  auto start_offset = manifest.submanifest_number() * subManifestSize * dataPacketSize;
-  auto packetNum = packetFullName.get(packetFullName.size() - 2).toSequenceNumber();
-  // seek to packet
-  is.sync();
-  is.seekg(start_offset + packetNum * dataPacketSize);
-  if (is.tellg() < 0) {
-    LOG_ERROR << "bad seek" << std::endl;
-  }
+ //fs::fstream is (filePath, fs::fstream::in | fs::fstream::binary);
+ auto dataPacketSize = manifest.data_packet_size();
+ // auto start_offset = manifest.submanifest_number() * subManifestSize * dataPacketSize;
+ // auto packetNum = packetFullName.get(packetFullName.size() - 2).toSequenceNumber();
  // read contents
  std::vector<char> bytes(dataPacketSize);
- is.read(&bytes.front(), dataPacketSize);
- auto read_size = is.gcount();
- if (is.bad() || read_size < 0) {
-  LOG_ERROR << "Bad read" << std::endl;
-  return nullptr;
- }
+ for(uint32_t i=0; i< dataPacketSize; i++)
+     bytes.at(i) = 'A';
+ auto read_size = dataPacketSize;
+ 
  // construct packet
  auto packetName = packetFullName.getSubName(0, packetFullName.size() - 1);
  auto d = make_shared<Data>(packetName);
