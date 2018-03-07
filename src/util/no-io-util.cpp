@@ -24,7 +24,7 @@
 //io-util.cpp has been removed from the build. Edit wscript to include it again
 
 
-#include "util/no-io-util.hpp"
+#include "util/io-util.hpp"
 
 #include "file-manifest.hpp"
 #include "torrent-file.hpp"

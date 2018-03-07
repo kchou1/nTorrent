@@ -21,7 +21,7 @@
 
 #include "sequential-data-fetcher.hpp"
 #include "util/logging.hpp"
-#include "util/no-io-util.hpp"
+#include "util/io-util.hpp"
 
 namespace ndn {
 namespace ntorrent {

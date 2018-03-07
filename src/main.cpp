@@ -20,7 +20,7 @@
  */
 #include "sequential-data-fetcher.hpp"
 #include "torrent-file.hpp"
-#include "util/no-io-util.hpp"
+#include "util/io-util.hpp"
 #include "util/logging.hpp"
 
 #include <iostream>
