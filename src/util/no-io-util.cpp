@@ -102,7 +102,7 @@ IoUtil::packetize_file(const fs::path& filePath,
       APPROX_BUFFER_SIZE                                  :
       APPROX_BUFFER_SIZE + dataPacketSize - (APPROX_BUFFER_SIZE % dataPacketSize);
   }
-  //fs.close();
+  
   packets.shrink_to_fit();
   ndn::security::KeyChain key_chain;
   // sign all the packets
@@ -186,11 +186,7 @@ IoUtil::readDataPacket(const Name&         packetFullName,
                        size_t              subManifestSize,
                        const std::string&  filePath)
 {
- //fs::fstream is (filePath, fs::fstream::in | fs::fstream::binary);
  auto dataPacketSize = manifest.data_packet_size();
- // auto start_offset = manifest.submanifest_number() * subManifestSize * dataPacketSize;
- // auto packetNum = packetFullName.get(packetFullName.size() - 2).toSequenceNumber();
- // read contents
  std::vector<char> bytes(dataPacketSize);
  for(uint32_t i=0; i< dataPacketSize; i++)
      bytes.push_back(DUMMY_CHAR);
