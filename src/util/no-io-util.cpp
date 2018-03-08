@@ -77,7 +77,7 @@ IoUtil::packetize_file(const fs::path& filePath,
   size_t bytes_read = 0;
   while(bytes_read < subManifestLength) {
     for(uint32_t i=0; i < buffer_size; i++){
-        file_bytes.push_back('A');
+        file_bytes.push_back(DUMMY_CHAR);
     }
     auto read_size = buffer_size;
     bytes_read += read_size;
@@ -193,7 +193,7 @@ IoUtil::readDataPacket(const Name&         packetFullName,
  // read contents
  std::vector<char> bytes(dataPacketSize);
  for(uint32_t i=0; i< dataPacketSize; i++)
-     bytes.at(i) = 'A';
+     bytes.push_back(DUMMY_CHAR);
  auto read_size = dataPacketSize;
  
  // construct packet
