@@ -84,11 +84,10 @@ FileManifest::generate(const std::string& filePath,
   BOOST_ASSERT(0 < subManifestSize);
   BOOST_ASSERT(0 < dataPacketSize);
   std::vector<FileManifest> manifests;
+  
   fs::path path(filePath);
-  if (!Io::exists(path)) {
-    BOOST_THROW_EXCEPTION(Error(filePath + ": no such file."));
-  }
-  size_t file_length = Io::file_size(filePath);
+  
+  size_t file_length = DUMMY_FILE_SIZE;
   // If the file_length is not evenly divisible by subManifestSize add 1, otherwise 0
   size_t numSubManifests = file_length / (subManifestSize * dataPacketSize) +
                               !!(file_length % (subManifestSize * dataPacketSize));

@@ -244,13 +244,13 @@ TorrentFile::generate(const std::string& directoryPath,
 
   std::vector<TorrentFile> torrentSegments;
 
-  fs::path path(directoryPath);
+  /*fs::path path(directoryPath);
   if (!Io::exists(path)) {
     BOOST_THROW_EXCEPTION(Error(directoryPath + ": no such directory."));
-  }
-
-  Name directoryPathName(directoryPath);
-  Io::recursive_directory_iterator directoryPtr(fs::system_complete(directoryPath).string());
+  }*/
+  
+  Name directoryPathName(DUMMY_FILE_PATH);
+  //Io::recursive_directory_iterator directoryPtr(fs::system_complete(DUMMY_FILE_PATH).string());
 
   std::string prefix = std::string(SharedConstants::commonPrefix) + "/NTORRENT";
   Name commonPrefix(prefix +
@@ -259,11 +259,13 @@ TorrentFile::generate(const std::string& directoryPath,
   Name torrentName(commonPrefix.toUri() + "/torrent-file");
   TorrentFile currentTorrentFile(torrentName, commonPrefix, {});
   std::vector<std::pair<std::vector<FileManifest>, std::vector<Data>>> manifestPairs;
-  // sort all the file names lexicographically
+  
   std::set<std::string> fileNames;
-  for (auto i = directoryPtr; i != Io::recursive_directory_iterator(); ++i) {
-    fileNames.insert(i->path().string());
+  for (uint8_t i = 0; i <= DUMMY_FILE_COUNT; i++) {
+      std::string temp = DUMMY_FILE_PATH + DUMMY_FILE_PREFIX + to_string(i);
+      fileNames.insert(temp);
   }
+
   size_t manifestFileCounter = 0u;
   for (const auto& fileName : fileNames) {
     Name manifestPrefix(prefix +
