@@ -28,7 +28,11 @@ struct SharedConstants {
   static const char* commonPrefix;
 };
 
+static const auto _1KB =   1*1024;
+static const auto _10KB =  10*1024;
 static const auto _100KB = 100*1024;
+static const auto _1MB =   1*1024*1024;
+static const auto DUMMY_FILE_SIZE = _1KB;
 
 } // namespace ntorrent
 } // namespace ndn
