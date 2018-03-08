@@ -28,6 +28,8 @@ struct SharedConstants {
   static const char* commonPrefix;
 };
 
+static const auto _100KB = 100*1024;
+
 } // namespace ntorrent
 } // namespace ndn
 
