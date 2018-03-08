@@ -261,7 +261,7 @@ TorrentFile::generate(const std::string& directoryPath,
   std::vector<std::pair<std::vector<FileManifest>, std::vector<Data>>> manifestPairs;
   
   std::set<std::string> fileNames;
-  for (uint8_t i = 0; i <= DUMMY_FILE_COUNT; i++) {
+  for (uint8_t i = 0; i <DUMMY_FILE_COUNT; i++) {
       std::string temp = DUMMY_FILE_PATH + DUMMY_FILE_PREFIX + to_string(i);
       fileNames.insert(temp);
   }

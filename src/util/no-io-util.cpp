@@ -53,7 +53,7 @@ IoUtil::packetize_file(const fs::path& filePath,
 {
   BOOST_ASSERT(0 < dataPacketSize);
   size_t APPROX_BUFFER_SIZE = std::numeric_limits<int>::max(); // 2 * 1024 * 1024 *1024
-  auto file_size = _1KB;
+  auto file_size = DUMMY_FILE_SIZE;
   auto start_offset = subManifestNum * subManifestSize * dataPacketSize;
   // determine the number of bytes in this submanifest
   auto subManifestLength = subManifestSize * dataPacketSize;
