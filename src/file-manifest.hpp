@@ -157,7 +157,7 @@ class FileManifest : public Data {
 
   std::shared_ptr<Name>
   submanifest_ptr() const;
-  /// Returns the 'submanifest_ptr' of this FileManifest, or 'nullptr' is none exists
+  /// Returns the 'submanifest_ptr' of this FileManifest, or 'nullptr' if none exists
 
   const std::vector<Name>&
   catalog() const;
