@@ -40,7 +40,7 @@ static const auto DUMMY_CHAR = 'A';
 
 static const std::string DUMMY_FILE_PATH ("dummy/");
 static const std::string DUMMY_FILE_PREFIX ("file_");
-static const uint8_t DUMMY_FILE_COUNT = 5;
+static const uint8_t DUMMY_FILE_COUNT = 1;
 
 } // namespace ntorrent
 } // namespace ndn
