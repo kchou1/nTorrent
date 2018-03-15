@@ -22,6 +22,7 @@
 
 #include "util/io-util.hpp"
 #include "util/shared-constants.hpp"
+#include "util/simulation-constants.hpp"
 
 #include <limits>
 

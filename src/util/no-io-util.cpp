@@ -29,6 +29,7 @@
 #include "file-manifest.hpp"
 #include "torrent-file.hpp"
 #include "util/logging.hpp"
+#include "util/simulation-constants.hpp"
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>

@@ -53,7 +53,7 @@ def build (bld):
         name='nTorrent',
         source=bld.path.ant_glob(['src/**/*.cpp'],
                                  excl=['src/main.cpp','src/util/io-util.cpp',
-                                 'src/file-manifest.cpp', 'src/torrent-file.cpp', 'src/torrent-manager.cpp']),
+                                 'src/file-manifest.cpp', 'src/torrent-file.cpp']),
         use='version NDN_CXX BOOST',
         includes='src',
         export_includes='src',

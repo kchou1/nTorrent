@@ -18,17 +18,27 @@
 *
 * See AUTHORS for complete list of nTorrent authors and contributors.
 */
-#ifndef INCLUDED_SHARED_CONSTANTS_HPP
-#define INCLUDED_SHARED_CONSTANTS_HPP
+#ifndef INCLUDED_SIMULATION_CONSTANTS_HPP
+#define INCLUDED_SIMULATION_CONSTANTS_HPP
 
 namespace ndn {
 namespace ntorrent {
 
-struct SharedConstants {
-  static const char* commonPrefix;
-};
+static const auto _1KB =   1*1024;
+static const auto _10KB =  10*1024;
+static const auto _100KB = 100*1024;
+static const auto _1MB =   1*1024*1024;
+
+static const auto DUMMY_FILE_SIZE = _1KB;
+
+//store a dummy char instead of reading a file
+static const auto DUMMY_CHAR = 'A';
+
+static const std::string DUMMY_FILE_PATH ("dummy/");
+static const std::string DUMMY_FILE_PREFIX ("file_");
+static const uint8_t DUMMY_FILE_COUNT = 5;
 
 } // namespace ntorrent
 } // namespace ndn
 
-#endif // INCLUDED_SHARED_CONSTANTS_HPP
+#endif // INCLUDED_SIMULATION_CONSTANTS_HPP
