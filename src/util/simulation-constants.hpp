@@ -24,6 +24,7 @@
 namespace ndn {
 namespace ntorrent {
 
+static const auto _8B =    8;
 static const auto _1KB =   1*1024;
 static const auto _10KB =  10*1024;
 static const auto _100KB = 100*1024;
