@@ -19,7 +19,7 @@
 * See AUTHORS for complete list of nTorrent authors and contributors.
 */
 
-//README: This file has been created to eliminate IO operations for the simulator.
+//README: This file has been created to eliminate I/O operations for the simulator.
 //no-io-util.[ch]pp replaces io-util.[ch]pp
 //io-util.cpp has been removed from the build. Edit wscript to include it again
 
@@ -115,44 +115,13 @@ IoUtil::packetize_file(const fs::path& filePath,
 
 bool IoUtil::writeTorrentSegment(const TorrentFile& segment, const std::string& path)
 {
-  /*
-  // validate that this torrent segment belongs to our torrent
-  auto segmentNum = segment.getSegmentNumber();
-  // write to disk at path
-  if (!fs::exists(path)) {
-    fs::create_directories(path);
-  }
-  auto filename = path + to_string(segmentNum);
-  // if there is already a file on disk for this torrent segment, determine if we should override
-  if (fs::exists(filename)) {
-    auto segmentOnDisk_ptr = io::load<TorrentFile>(filename);
-    if (nullptr != segmentOnDisk_ptr && *segmentOnDisk_ptr == segment) {
-      return false;
-    }
-  }
-  io::save(segment, filename);
-  // add to collection
-  */
+  //always succeed since no file I/O is to be done on the simulation.
   return true;
 }
 
 bool IoUtil::writeFileManifest(const FileManifest& manifest, const std::string& path)
 {
-  /*auto subManifestNum = manifest.submanifest_number();
-  fs::path filename = path + manifest.file_name() + "/" + to_string(subManifestNum);
-
-  // write to disk at path
-  if (!fs::exists(filename.parent_path())) {
-    boost::filesystem::create_directories(filename.parent_path());
-  }
-  // if there is already a file on disk for this file manifest, determine if we should override
-  if (fs::exists(filename)) {
-    auto submanifestOnDisk_ptr = io::load<FileManifest>(filename.string());
-    if (nullptr != submanifestOnDisk_ptr && *submanifestOnDisk_ptr == manifest) {
-      return false;
-    }
-  }
-  io::save(manifest, filename.string());*/
+  //always succeed since no file I/O is to be done on the simulation.
   return true;
 }
 bool
@@ -161,24 +130,8 @@ IoUtil::writeData(const Data&         packet,
                   size_t              subManifestSize,
                   const std::string&  filePath)
 {
+  //always succeed since no file I/O is to be done on the simulation.
   return true;
-  /*fs::ofstream os (filePath, fs::ofstream::binary | fs::ofstream::out | fs::ofstream::app);
-  auto packetName = packet.getName();
-  auto packetNum = packetName.get(packetName.size() - 1).toSequenceNumber();
-  auto dataPacketSize = manifest.data_packet_size();
-  auto initial_offset = manifest.submanifest_number() * subManifestSize * dataPacketSize;
-  auto packetOffset =  initial_offset + packetNum * dataPacketSize;
-  // write data to disk
-  os.seekp(packetOffset);
-  try {
-    auto content = packet.getContent();
-    std::vector<char> data(content.value_begin(), content.value_end());
-    return os.write(&data[0], data.size()).good() && os.flush().good();
-  }
-  catch (io::Error &e) {
-    LOG_ERROR << e.what() << std::endl;
-    return false;
-  }*/
 }
 
 std::shared_ptr<Data>
@@ -224,4 +177,4 @@ IoUtil::findType(const Name& name)
 
 
 } // namespace ntorrent
-} // namespace ndn}
+} // namespace ndn
