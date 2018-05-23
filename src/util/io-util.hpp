@@ -51,6 +51,7 @@ class IoUtil {
     TORRENT_FILE,
     FILE_MANIFEST,
     DATA_PACKET,
+    VECTOR,
     UNKNOWN
   };
 

@@ -170,6 +170,8 @@ IoUtil::findType(const Name& name)
   else if (name.get(name.size() - 2).isSequenceNumber() &&
            !(name.get(name.size() - 3).isSequenceNumber())) {
     rval = FILE_MANIFEST;
+  } else if (name.get(name.size() - 1).toUri() == "vector") {
+    rval = VECTOR;
   }
   return rval;
 }
